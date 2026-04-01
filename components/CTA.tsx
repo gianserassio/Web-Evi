@@ -11,10 +11,9 @@ export default function CTA() {
     const form = e.currentTarget;
     const data = new FormData(form);
     try {
-      const res = await fetch("https://formspree.io/f/XXXXXXXX", {
+      const res = await fetch("/api/contact", {
         method: "POST",
         body: data,
-        headers: { Accept: "application/json" },
       });
       if (res.ok) {
         setStatus("ok");
