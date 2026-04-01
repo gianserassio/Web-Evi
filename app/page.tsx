@@ -5,7 +5,7 @@ import Portfolio from "@/components/Portfolio";
 import Process from "@/components/Process";
 import About from "@/components/About";
 import Differentiator from "@/components/Differentiator";
-import Testimonials from "@/components/Testimonials";
+import Stats from "@/components/Stats";
 import CTA from "@/components/CTA";
 
 export default function Home() {
@@ -19,7 +19,7 @@ export default function Home() {
       <Process />
       <Portfolio />
       <Differentiator />
-      <Testimonials />
+      <Stats />
       <CTA />
     </main>
   );
