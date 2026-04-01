@@ -49,9 +49,6 @@ export default function Stats() {
                 {stat.value}
               </p>
               <p className="text-sm font-bold text-[#1A1A1A]">{stat.label}</p>
-              {stat.sub && (
-                <p className="text-xs text-[#1A1A1A]/40 mt-1">{stat.sub}</p>
-              )}
             </div>
           ))}
         </div>
