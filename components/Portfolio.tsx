@@ -182,6 +182,7 @@ function VideoModal({ item, onClose }: { item: typeof items[0]; onClose: () => v
               loop
               muted={muted}
               playsInline
+              disableRemotePlayback
               className="w-full h-full object-cover"
             />
           </div>
@@ -266,6 +267,7 @@ export default function Portfolio() {
                   loop
                   muted
                   playsInline
+                  disableRemotePlayback
                   className="absolute inset-0 w-full h-full object-cover"
                 />
               )}

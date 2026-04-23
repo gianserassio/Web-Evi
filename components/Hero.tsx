@@ -100,6 +100,7 @@ export default function Hero() {
               muted
               loop
               playsInline
+              disableRemotePlayback
             >
               <source src="https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/Home.mp4" type="video/mp4" />
             </video>
