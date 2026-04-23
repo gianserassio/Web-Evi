@@ -102,7 +102,7 @@ export default function Hero() {
               playsInline
               poster="/video-poster.jpg"
             >
-              <source src="https://res.cloudinary.com/dnin04lmm/video/upload/v1775069298/HOOK_kb7bs9.mp4" type="video/mp4" />
+              <source src="https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/Home.mov" type="video/quicktime" />
             </video>
 
             {/* Overlay gradient bottom */}
