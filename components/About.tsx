@@ -26,7 +26,7 @@ export default function About() {
 
             <div className="relative rounded-3xl overflow-hidden aspect-[3/4] border border-white/60 shadow-2xl shadow-[#1A1A1A]/10">
               <img
-                src="https://res.cloudinary.com/dnin04lmm/image/upload/q_auto,f_auto/v1774917439/IMG_3251_enrz2l.webp"
+                src="https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/Foto%20Perfil.jpg"
                 alt="Evangelina"
                 className="w-full h-full object-cover"
               />
