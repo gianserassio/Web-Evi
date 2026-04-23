@@ -100,9 +100,8 @@ export default function Hero() {
               muted
               loop
               playsInline
-              poster="/video-poster.jpg"
             >
-              <source src="https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/Home.mov" type="video/quicktime" />
+              <source src="https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/Home.mp4" type="video/mp4" />
             </video>
 
             {/* Overlay gradient bottom */}
