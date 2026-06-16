@@ -19,7 +19,7 @@ export default function About() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center">
 
           {/* Imagen / placeholder */}
-          <div className="relative max-w-sm mx-auto lg:mx-0 w-full">
+          <div className="reveal relative max-w-sm mx-auto lg:mx-0 w-full">
             {/* Marco decorativo detrás */}
             <div className="absolute -top-5 -left-5 w-full h-full rounded-3xl border-2 border-[#822B5B]/30" />
             <div className="absolute -bottom-5 -right-5 w-full h-full rounded-3xl bg-gradient-to-br from-[#3FBDBC]/15 to-[#822B5B]/10" />
@@ -35,7 +35,7 @@ export default function About() {
           </div>
 
           {/* Texto */}
-          <div>
+          <div className="reveal reveal-d2">
             <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest uppercase text-[#822B5B] mb-4">
               <span className="w-4 h-px bg-[#822B5B]" />
               Sobre mí

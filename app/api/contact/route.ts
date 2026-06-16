@@ -7,6 +7,7 @@ export async function POST(req: Request) {
   const nombre = formData.get("nombre") as string;
   const email = formData.get("email") as string;
   const mensaje = formData.get("mensaje") as string;
+  const servicio = (formData.get("servicio") as string) || "Sin especificar";
 
   if (!nombre || !email || !mensaje) {
     return NextResponse.json({ error: "Faltan campos" }, { status: 400 });
@@ -15,8 +16,8 @@ export async function POST(req: Request) {
   const { error } = await resend.emails.send({
     from: "Portfolio Evi <contacto@evirost.com>",
     to: "evangelinarost9@gmail.com",
-    subject: `Nuevo mensaje de ${nombre}`,
-    text: `Nombre: ${nombre}\nEmail: ${email}\n\nMensaje:\n${mensaje}`,
+    subject: `Nuevo mensaje de ${nombre} — ${servicio}`,
+    text: `Nombre: ${nombre}\nEmail: ${email}\nServicio de interés: ${servicio}\n\nMensaje:\n${mensaje}`,
   });
 
   if (error) {

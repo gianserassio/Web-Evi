@@ -3,31 +3,90 @@
 import { useState, useRef, useEffect } from "react";
 import Image from "next/image";
 
-const websites = [
+/* ----------------------------- Data ----------------------------- */
+
+const cmSubcats = [
   {
-    name: "Annapurna Outdoors",
-    url: "https://www.annapurnaoutdoors.com/",
-    image: "/annapurna.png",
+    label: "Diseño de carruseles",
+    desc: "Piezas de carrusel pensadas para informar y enganchar.",
+    color: "#822B5B",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="7" y="4" width="10" height="16" rx="2" />
+        <path d="M4 7v10M20 7v10" />
+      </svg>
+    ),
   },
   {
-    name: "Gian Serassio",
-    url: "https://gianserassio.com/",
-    image: "/gian-serassio.png",
+    label: "Reels",
+    desc: "Videos cortos para crecer y mantener la cuenta activa.",
+    color: "#3FBDBC",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="3" y="4" width="18" height="16" rx="3" />
+        <path d="M3 9h18M9 4l2 5M15 4l2 5" />
+        <path d="m11 13 4 2.5-4 2.5z" fill="currentColor" stroke="none" />
+      </svg>
+    ),
   },
   {
-    name: "Lic. Lucas Serassio",
-    url: "https://www.liclucasserassio.com/",
-    image: "/lic-lucas-serassio.png",
+    label: "Estadísticas",
+    desc: "Resultados y crecimiento medibles de las cuentas.",
+    color: "#3696A2",
+    icon: (
+      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M3 3v18h18" />
+        <rect x="7" y="11" width="3" height="6" />
+        <rect x="12" y="7" width="3" height="10" />
+        <rect x="17" y="13" width="3" height="4" />
+      </svg>
+    ),
   },
 ];
 
-const items = [
+/**
+ * Carruseles de Community Manager. Cada objeto = un post de carrusel,
+ * con sus slides en orden. Pegá acá las URLs de R2 (proporción 4:5).
+ *
+ * Ejemplo:
+ * { title: "Tips de marca", slides: [
+ *     "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/carruseles/c1-1.jpg",
+ *     "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/carruseles/c1-2.jpg",
+ * ] },
+ */
+const R2 = "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev";
+
+/** Reels de Community Manager (videos verticales convertidos a MP4). */
+const reels: string[] = ["/reels/cafttur.mp4"];
+
+const carousels: { title: string; slides: string[] }[] = [
   {
-    label: "UGC / Reels",
-    tag: "",
-    gradient: "from-[#822B5B]/30 to-[#3696A2]/10",
-    border: "border-[#822B5B]/25",
-    glow: "hover:shadow-[0_0_60px_#822B5B25]",
+    title: "Perfil de psicóloga",
+    slides: Array.from(
+      { length: 8 },
+      (_, n) => `${R2}/Carruseles/Carrusel%201/Carrusel_1%20-%20(${n + 1}).png`
+    ),
+  },
+  {
+    title: "Annapurna Outdoors",
+    slides: Array.from(
+      { length: 5 },
+      (_, n) => `${R2}/Carruseles/Carrusel%202/Carrusel_2%20-%20(${n + 1}).mp4`
+    ),
+  },
+  {
+    title: "CAFTTUR — Cámara de Transporte Turístico",
+    slides: Array.from(
+      { length: 6 },
+      (_, n) => `${R2}/Carruseles/Carrusel%203/Carrusel_3%20-%20(${n + 1}).jpg`
+    ),
+  },
+];
+
+const contentGroups = [
+  {
+    label: "UGC",
+    color: "#822B5B",
     videos: [
       "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/ugc/Mochi%203.mp4",
       "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/ugc/copy_D7B95BF4-F0A1-41B2-B8CA-BE569207FD45.mp4",
@@ -40,26 +99,14 @@ const items = [
     ],
   },
   {
-    label: "Contenido General",
-    tag: "",
-    gradient: "from-[#3FBDBC]/25 to-[#3FBDBC]/5",
-    border: "border-[#3FBDBC]/25",
-    glow: "hover:shadow-[0_0_60px_#3FBDBC20]",
+    label: "Contenido para marcas",
+    color: "#3FBDBC",
     videos: [
       "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/contenido%20general/Campe%20bolsita%20%20(1).mp4",
       "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/contenido%20general/Curio%2020%25.mp4",
       "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/contenido%20general/Flybondi%20.mp4",
       "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/contenido%20general/copy_271D7DFE-475B-4758-8F92-088B4D4B194F.mp4",
       "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/contenido%20general/copy_848C52B1-278C-4D46-B413-7096AE0FE9B2.mp4",
-    ],
-  },
-  {
-    label: "Agencia de Marketing",
-    tag: "",
-    gradient: "from-[#3696A2]/25 to-[#822B5B]/5",
-    border: "border-[#3696A2]/25",
-    glow: "hover:shadow-[0_0_60px_#3696A220]",
-    videos: [
       "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/Agencia/Securstyle.mp4",
       "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/Agencia/copy_837FF6F0-32FE-480C-AD04-EA0D43EBAC7F.mp4",
       "https://pub-0cd1a326d662425eb94608296f4a31d0.r2.dev/Agencia/copy_AA914B12-ACDC-4B82-9498-E550C1BA22DE.mp4",
@@ -70,161 +117,289 @@ const items = [
   },
 ];
 
-function VideoModal({ item, onClose }: { item: typeof items[0]; onClose: () => void }) {
-  const scrollRef = useRef<HTMLDivElement>(null);
-  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
-  const [active, setActive] = useState(0);
-  const [muted, setMuted] = useState(false);
+const websites = [
+  { name: "Annapurna Outdoors", url: "https://www.annapurnaoutdoors.com/", image: "/annapurna.png" },
+  { name: "Gian Serassio", url: "https://gianserassio.com/", image: "/gian-serassio.png" },
+  { name: "Lic. Lucas Serassio", url: "https://www.liclucasserassio.com/", image: "/lic-lucas-serassio.png" },
+  { name: "Como Inés", url: "https://comoines.com/", image: "/como-ines.png" },
+];
 
-  // Close on backdrop click or Escape
-  useEffect(() => {
-    const onKey = (e: KeyboardEvent) => { if (e.key === "Escape") onClose(); };
-    document.addEventListener("keydown", onKey);
-    document.body.style.overflow = "hidden";
-    return () => {
-      document.removeEventListener("keydown", onKey);
-      document.body.style.overflow = "";
-    };
-  }, [onClose]);
+/* --------------------------- Componentes -------------------------- */
 
-  // Scroll active card into center
-  useEffect(() => {
-    const container = scrollRef.current;
-    const card = container?.children[active] as HTMLElement | undefined;
-    if (!card || !container) return;
-    const offset = card.offsetLeft - container.offsetWidth / 2 + card.offsetWidth / 2;
-    container.scrollTo({ left: offset, behavior: "smooth" });
-  }, [active]);
+function SoundIcon({ on }: { on: boolean }) {
+  return on ? (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+      <path d="M11 5L6 9H2v6h4l5 4V5z" fill="white" fillOpacity="0.9" />
+      <path d="M15.54 8.46a5 5 0 010 7.07" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
+      <path d="M19.07 4.93a10 10 0 010 14.14" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  ) : (
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="none">
+      <path d="M11 5L6 9H2v6h4l5 4V5z" fill="white" fillOpacity="0.9" />
+      <line x1="23" y1="9" x2="17" y2="15" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
+      <line x1="17" y1="9" x2="23" y2="15" stroke="white" strokeWidth="1.8" strokeLinecap="round" />
+    </svg>
+  );
+}
 
-  // Pause all except active
-  useEffect(() => {
-    videoRefs.current.forEach((v, i) => {
-      if (!v) return;
-      if (i === active) {
-        v.play().catch(() => {});
-      } else {
-        v.pause();
-        v.currentTime = 0;
-      }
-    });
-  }, [active]);
+/** Tile de video: se reproduce solo cuando está en pantalla, se pausa al salir. */
+function VideoTile({
+  src,
+  sound,
+  onToggleSound,
+}: {
+  src: string;
+  sound: boolean;
+  onToggleSound: () => void;
+}) {
+  const ref = useRef<HTMLVideoElement>(null);
 
-  // Sync muted state across all videos
   useEffect(() => {
-    videoRefs.current.forEach((v) => {
-      if (v) v.muted = muted;
-    });
-  }, [muted]);
+    const v = ref.current;
+    if (!v) return;
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) v.play().catch(() => {});
+        else v.pause();
+      },
+      { threshold: 0.35 }
+    );
+    io.observe(v);
+    return () => io.disconnect();
+  }, []);
+
+  useEffect(() => {
+    if (ref.current) ref.current.muted = !sound;
+  }, [sound]);
 
   return (
-    <div
-      className="fixed inset-0 z-50 flex flex-col items-center justify-center bg-black/80 backdrop-blur-sm"
-      onClick={(e) => { if (e.target === e.currentTarget) onClose(); }}
-    >
-      {/* Header */}
-      <div className="relative z-10 flex items-center justify-between w-full max-w-3xl px-6 mb-6">
-        <div>
-
-          <h3 className="text-xl font-black text-white">{item.label}</h3>
-        </div>
-        <div className="flex items-center gap-2">
-          <button
-            onClick={() => setMuted((m) => !m)}
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
-            aria-label={muted ? "Activar audio" : "Silenciar"}
-          >
-            {muted ? (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M11 5L6 9H2v6h4l5 4V5z" fill="white" fillOpacity="0.8"/>
-                <line x1="23" y1="9" x2="17" y2="15" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-                <line x1="17" y1="9" x2="23" y2="15" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-              </svg>
-            ) : (
-              <svg width="16" height="16" viewBox="0 0 24 24" fill="none">
-                <path d="M11 5L6 9H2v6h4l5 4V5z" fill="white" fillOpacity="0.8"/>
-                <path d="M15.54 8.46a5 5 0 010 7.07" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-                <path d="M19.07 4.93a10 10 0 010 14.14" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-              </svg>
-            )}
-          </button>
-          <button
-            onClick={onClose}
-            className="w-9 h-9 rounded-full bg-white/10 hover:bg-white/20 flex items-center justify-center transition-colors"
-            aria-label="Cerrar"
-          >
-            <svg width="14" height="14" viewBox="0 0 14 14" fill="none">
-              <path d="M1 1l12 12M13 1L1 13" stroke="white" strokeWidth="1.8" strokeLinecap="round"/>
-            </svg>
-          </button>
-        </div>
-      </div>
-
-      {/* Carousel */}
-      <div
-        ref={scrollRef}
-        className="flex gap-4 overflow-x-auto scrollbar-hide px-[calc(50vw-120px)] w-full snap-x snap-mandatory"
-        style={{ scrollbarWidth: "none" }}
+    <div className="group relative overflow-hidden rounded-2xl bg-black aspect-[9/16] shadow-sm ring-1 ring-[#1A1A1A]/5 hover:ring-[#822B5B]/30 hover:shadow-xl transition-all duration-300">
+      <video
+        ref={ref}
+        src={src}
+        loop
+        muted
+        playsInline
+        preload="metadata"
+        disableRemotePlayback
+        className="w-full h-full object-cover"
+      />
+      <button
+        onClick={onToggleSound}
+        aria-label={sound ? "Silenciar" : "Activar sonido"}
+        className="absolute bottom-3 right-3 w-9 h-9 rounded-full bg-black/45 backdrop-blur-sm flex items-center justify-center hover:bg-black/65 transition-colors"
       >
-        {item.videos.map((src, i) => (
-          <div
-            key={i}
-            onClick={() => setActive(i)}
-            className={`snap-center flex-shrink-0 cursor-pointer transition-all duration-300 rounded-2xl overflow-hidden ${
-              i === active
-                ? "w-[240px] opacity-100 scale-100 ring-2 ring-[#822B5B]"
-                : "w-[200px] opacity-50 scale-95"
-            }`}
-            style={{ aspectRatio: "9/16", height: "420px" }}
-          >
-            <video
-              ref={(el) => { videoRefs.current[i] = el; }}
-              src={src}
-              loop
-              muted={muted}
-              playsInline
-              disableRemotePlayback
-              className="w-full h-full object-cover"
-            />
-          </div>
-        ))}
-      </div>
-
-      {/* Dots */}
-      <div className="flex gap-2 mt-6">
-        {item.videos.map((_, i) => (
-          <button
-            key={i}
-            onClick={() => setActive(i)}
-            className={`rounded-full transition-all duration-200 ${
-              i === active ? "w-5 h-2 bg-[#822B5B]" : "w-2 h-2 bg-white/30"
-            }`}
-          />
-        ))}
-      </div>
+        <SoundIcon on={sound} />
+      </button>
     </div>
   );
 }
 
-export default function Portfolio() {
-  const [openItem, setOpenItem] = useState<typeof items[0] | null>(null);
+/** Grilla de videos con control de sonido único (solo uno suena a la vez). */
+function VideoGrid({ videos }: { videos: string[] }) {
+  const [soundIdx, setSoundIdx] = useState<number | null>(null);
+  return (
+    <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4">
+      {videos.map((src, i) => (
+        <VideoTile
+          key={src}
+          src={src}
+          sound={soundIdx === i}
+          onToggleSound={() => setSoundIdx((cur) => (cur === i ? null : i))}
+        />
+      ))}
+    </div>
+  );
+}
 
+const isVideo = (src: string) => /\.(mp4|webm|mov)(\?|$)/i.test(src);
+
+/** Slider de un carrusel (imágenes o videos 4:5), navegable ahí mismo. */
+function CarouselTile({ title, slides }: { title: string; slides: string[] }) {
+  const [i, setI] = useState(0);
+  const videoRefs = useRef<(HTMLVideoElement | null)[]>([]);
+  const go = (d: number) => setI((p) => (p + d + slides.length) % slides.length);
+
+  // Reproducir solo el slide de video activo
+  useEffect(() => {
+    videoRefs.current.forEach((v, idx) => {
+      if (!v) return;
+      if (idx === i) v.play().catch(() => {});
+      else {
+        v.pause();
+        v.currentTime = 0;
+      }
+    });
+  }, [i]);
+
+  return (
+    <div className="group relative overflow-hidden rounded-2xl bg-black aspect-[4/5] shadow-sm ring-1 ring-[#1A1A1A]/5 hover:ring-[#822B5B]/30 hover:shadow-xl transition-all duration-300">
+      {slides.map((src, idx) =>
+        isVideo(src) ? (
+          <video
+            key={idx}
+            ref={(el) => {
+              videoRefs.current[idx] = el;
+            }}
+            src={src}
+            loop
+            muted
+            playsInline
+            preload="metadata"
+            disableRemotePlayback
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+              idx === i ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        ) : (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            key={idx}
+            src={src}
+            alt={`${title} — slide ${idx + 1}`}
+            loading="lazy"
+            className={`absolute inset-0 w-full h-full object-cover transition-opacity duration-300 ${
+              idx === i ? "opacity-100" : "opacity-0"
+            }`}
+          />
+        )
+      )}
+
+      {/* Overlay título */}
+      <div className="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/70 to-transparent p-4 pt-10 pointer-events-none">
+        <p className="text-white text-sm font-bold">{title}</p>
+      </div>
+
+      {slides.length > 1 && (
+        <>
+          {/* Contador */}
+          <div className="absolute top-3 right-3 rounded-full bg-black/45 backdrop-blur-sm px-2.5 py-1 text-white text-[11px] font-bold tabular-nums">
+            {i + 1}/{slides.length}
+          </div>
+
+          {/* Flechas */}
+          <button
+            onClick={() => go(-1)}
+            aria-label="Anterior"
+            className="absolute left-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white opacity-0 group-hover:opacity-100 hover:bg-black/65 transition-all"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m15 18-6-6 6-6" />
+            </svg>
+          </button>
+          <button
+            onClick={() => go(1)}
+            aria-label="Siguiente"
+            className="absolute right-2 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-black/40 backdrop-blur-sm flex items-center justify-center text-white opacity-0 group-hover:opacity-100 hover:bg-black/65 transition-all"
+          >
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
+              <path d="m9 18 6-6-6-6" />
+            </svg>
+          </button>
+
+          {/* Dots */}
+          <div className="absolute bottom-12 left-0 right-0 flex justify-center gap-1.5">
+            {slides.map((_, idx) => (
+              <button
+                key={idx}
+                onClick={() => setI(idx)}
+                aria-label={`Slide ${idx + 1}`}
+                className={`h-1.5 rounded-full transition-all ${
+                  idx === i ? "w-4 bg-white" : "w-1.5 bg-white/40"
+                }`}
+              />
+            ))}
+          </div>
+        </>
+      )}
+    </div>
+  );
+}
+
+/** Encabezado de subgrupo (punto de color + título + contador opcional). */
+function GroupHeader({
+  label,
+  color,
+  count,
+}: {
+  label: string;
+  color: string;
+  count?: number;
+}) {
+  return (
+    <div className="flex items-center gap-2.5 mb-5">
+      <span className="w-2.5 h-2.5 rounded-full" style={{ backgroundColor: color }} />
+      <h4 className="font-bold text-[#1A1A1A] text-lg">{label}</h4>
+      {count != null && (
+        <span className="text-[#1A1A1A]/35 text-sm font-semibold">{count}</span>
+      )}
+    </div>
+  );
+}
+
+/** Estado vacío para subcategorías sin contenido todavía. */
+function ComingSoon({ color }: { color: string }) {
+  return (
+    <div className="rounded-2xl border border-dashed border-[#1A1A1A]/15 bg-white/50 py-12 text-center">
+      <span
+        className="text-[11px] font-bold uppercase tracking-wider px-3 py-1 rounded-full"
+        style={{ backgroundColor: color + "14", color }}
+      >
+        Próximamente
+      </span>
+    </div>
+  );
+}
+
+function CategoryHeader({
+  number,
+  title,
+  desc,
+  color,
+}: {
+  number: string;
+  title: string;
+  desc: string;
+  color: string;
+}) {
+  return (
+    <div className="reveal mb-9">
+      <div className="flex items-center gap-4">
+        <span
+          className="text-4xl sm:text-5xl font-black leading-none"
+          style={{ color }}
+        >
+          {number}
+        </span>
+        <div>
+          <h3 className="text-2xl sm:text-3xl font-black text-[#1A1A1A] leading-tight">
+            {title}
+          </h3>
+          <p className="mt-1 text-sm text-[#1A1A1A]/50">{desc}</p>
+        </div>
+      </div>
+      <div
+        className="mt-5 h-[3px] w-full rounded-full"
+        style={{ background: `linear-gradient(to right, ${color}, ${color}00)` }}
+      />
+    </div>
+  );
+}
+
+/* ------------------------------ Página ----------------------------- */
+
+export default function Portfolio() {
   return (
     <section id="portfolio" className="relative py-28 px-6 overflow-hidden bg-[#FAF8F5]">
       {/* Dot grid */}
       <div className="dot-grid absolute inset-0 opacity-50" />
 
-      {/* Blobs */}
+      {/* Blob */}
       <div className="pointer-events-none absolute top-20 left-1/2 -translate-x-1/2 w-[500px] h-[300px] rounded-full bg-[#822B5B]/16 blur-[100px]" />
 
-      {/* Ghost text */}
-      <div className="pointer-events-none absolute -bottom-4 left-0 right-0 overflow-hidden select-none">
-        <span className="block text-[130px] sm:text-[200px] font-black text-[#1A1A1A]/[0.03] leading-none text-center whitespace-nowrap">
-          PORTFOLIO
-        </span>
-      </div>
-
-      <div className="relative z-10 max-w-5xl mx-auto">
-        <div className="text-center mb-16">
+      <div className="relative z-10 max-w-6xl mx-auto">
+        {/* Encabezado general */}
+        <div className="reveal text-center mb-20">
           <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest uppercase text-[#822B5B] mb-4">
             <span className="w-4 h-px bg-[#822B5B]" />
             Portfolio
@@ -235,110 +410,129 @@ export default function Portfolio() {
             <span className="text-[#822B5B]">resultados reales</span>
           </h2>
           <p className="mt-4 text-[#1A1A1A]/55 max-w-xl mx-auto">
-            Una selección de mis mejores proyectos y colaboraciones con marcas.
+            Mi trabajo dividido en las tres áreas en las que ayudo a las marcas.
           </p>
         </div>
 
-        {/* Titulo Contenido para redes */}
-        <div className="flex items-center gap-4 mb-8">
-          <div className="flex-1 h-px bg-[#1A1A1A]/10" />
-          <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest uppercase text-[#822B5B]">
-            <span className="w-4 h-px bg-[#822B5B]" />
-            Contenido para redes
-            <span className="w-4 h-px bg-[#822B5B]" />
-          </span>
-          <div className="flex-1 h-px bg-[#1A1A1A]/10" />
-        </div>
-
-        {/* Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
-          {items.map((item) => (
-            <div
-              key={item.label}
-              onClick={() => item.videos.length > 0 && setOpenItem(item)}
-              className={`relative rounded-2xl overflow-hidden border ${item.border} transition-all duration-300 ${item.glow} ${item.videos.length > 0 ? "cursor-pointer" : "cursor-default"}`}
-              style={{ height: "260px" }}
-            >
-              {/* Video de portada */}
-              {item.videos.length > 0 && (
-                <video
-                  src={item.videos[0]}
-                  autoPlay
-                  loop
-                  muted
-                  playsInline
-                  disableRemotePlayback
-                  className="absolute inset-0 w-full h-full object-cover"
-                />
-              )}
-              {/* Fallback gradient si no hay video */}
-              {item.videos.length === 0 && (
-                <div className={`absolute inset-0 bg-gradient-to-br ${item.gradient}`} />
-              )}
-              {/* Overlay oscuro para legibilidad */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-black/10" />
-              <div className="absolute inset-0 flex flex-col justify-end p-6">
-                <div className="w-8 h-0.5 bg-white/60 mb-2" />
-                <p className="font-bold text-white text-base">{item.label}</p>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        {/* CTA debajo de las cards */}
-        <div className="flex flex-col items-center gap-2 mt-8">
-          <div className="flex items-center gap-2">
-            <span className="text-[#822B5B] font-black text-lg">↑</span>
-            <p className="text-[#822B5B] font-bold text-sm tracking-wide">Tocá una categoría para ver los trabajos</p>
-            <span className="text-[#822B5B] font-black text-lg">↑</span>
+        {/* ====================== 1. COMMUNITY MANAGER ====================== */}
+        <div
+          id="community-manager"
+          className="mb-10 rounded-[28px] border p-7 sm:p-10 scroll-mt-28"
+          style={{ borderColor: "#822B5B22", background: "#822B5B08" }}
+        >
+          <CategoryHeader
+            number="01"
+            title="Community Manager"
+            desc="Gestiono tus redes de punta a punta: contenido, diseño y resultados."
+            color="#822B5B"
+          />
+          <div className="space-y-12">
+            {cmSubcats.map((sub) => {
+              const hasCarousels =
+                sub.label === "Diseño de carruseles" && carousels.length > 0;
+              const hasReels = sub.label === "Reels" && reels.length > 0;
+              const count = hasCarousels
+                ? carousels.length
+                : hasReels
+                ? reels.length
+                : undefined;
+              return (
+                <div key={sub.label} className="reveal">
+                  <GroupHeader label={sub.label} color={sub.color} count={count} />
+                  {hasCarousels ? (
+                    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+                      {carousels.map((c) => (
+                        <CarouselTile key={c.title} title={c.title} slides={c.slides} />
+                      ))}
+                    </div>
+                  ) : hasReels ? (
+                    <VideoGrid videos={reels} />
+                  ) : (
+                    <ComingSoon color={sub.color} />
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
 
-        {/* Divisor */}
-        <div className="flex items-center gap-4 mt-20 mb-14">
-          <div className="flex-1 h-px bg-[#1A1A1A]/10" />
-          <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest uppercase text-[#822B5B]">
-            <span className="w-4 h-px bg-[#822B5B]" />
-            Desarrollo web
-            <span className="w-4 h-px bg-[#822B5B]" />
-          </span>
-          <div className="flex-1 h-px bg-[#1A1A1A]/10" />
-        </div>
-
-        {/* Web cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          {websites.map((site) => (
-            <a
-              key={site.name}
-              href={site.url}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="group relative rounded-2xl overflow-hidden border border-[#1A1A1A]/10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300"
-            >
-              <div className="relative w-full aspect-video overflow-hidden">
-                <Image
-                  src={site.image}
-                  alt={site.name}
-                  fill
-                  className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-[#822B5B]/0 group-hover:bg-[#822B5B]/20 transition-colors duration-300 flex items-center justify-center">
-                  <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-[#822B5B] font-bold text-sm px-4 py-2 rounded-full shadow-lg">
-                    Ver sitio →
+        {/* ===================== 2. CREADORA DE CONTENIDO ==================== */}
+        <div
+          id="creadora-contenido"
+          className="mb-10 rounded-[28px] border p-7 sm:p-10 scroll-mt-28"
+          style={{ borderColor: "#3FBDBC2E", background: "#3FBDBC0D" }}
+        >
+          <CategoryHeader
+            number="02"
+            title="Creadora de contenido"
+            desc="Videos y piezas creadas para distintas marcas y campañas."
+            color="#3FBDBC"
+          />
+          <div className="space-y-12">
+            {contentGroups.map((group) => (
+              <div key={group.label} className="reveal">
+                <div className="flex items-center gap-2.5 mb-5">
+                  <span
+                    className="w-2.5 h-2.5 rounded-full"
+                    style={{ backgroundColor: group.color }}
+                  />
+                  <h4 className="font-bold text-[#1A1A1A] text-lg">{group.label}</h4>
+                  <span className="text-[#1A1A1A]/35 text-sm font-semibold">
+                    {group.videos.length}
                   </span>
                 </div>
+                <VideoGrid videos={group.videos} />
               </div>
-              <div className="px-4 py-3 bg-white border-t border-[#1A1A1A]/6">
-                <p className="font-bold text-[#1A1A1A] text-sm">{site.name}</p>
-                <p className="text-xs text-[#1A1A1A]/40 mt-0.5 truncate">{site.url.replace(/https?:\/\/(www\.)?/, "")}</p>
-              </div>
-            </a>
-          ))}
+            ))}
+          </div>
+        </div>
+
+        {/* ==================== 3. DISEÑO Y DESARROLLO WEB =================== */}
+        <div
+          id="desarrollo-web"
+          className="rounded-[28px] border p-7 sm:p-10 scroll-mt-28"
+          style={{ borderColor: "#3696A22E", background: "#3696A20D" }}
+        >
+          <CategoryHeader
+            number="03"
+            title="Diseño y desarrollo web"
+            desc="Sitios y landing pages a medida, online y funcionando."
+            color="#3696A2"
+          />
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
+            {websites.map((site, i) => (
+              <a
+                key={site.name}
+                href={site.url}
+                target="_blank"
+                rel="noopener noreferrer"
+                className={`reveal reveal-d${i + 1} group relative rounded-2xl overflow-hidden border border-[#1A1A1A]/10 shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300`}
+              >
+                <div className="relative w-full aspect-video overflow-hidden">
+                  <Image
+                    src={site.image}
+                    alt={site.name}
+                    fill
+                    sizes="(max-width: 640px) 100vw, 50vw"
+                    className="object-cover object-top group-hover:scale-105 transition-transform duration-500"
+                  />
+                  <div className="absolute inset-0 bg-[#822B5B]/0 group-hover:bg-[#822B5B]/20 transition-colors duration-300 flex items-center justify-center">
+                    <span className="opacity-0 group-hover:opacity-100 transition-opacity duration-300 bg-white text-[#822B5B] font-bold text-sm px-4 py-2 rounded-full shadow-lg">
+                      Ver sitio →
+                    </span>
+                  </div>
+                </div>
+                <div className="px-4 py-3 bg-white border-t border-[#1A1A1A]/6">
+                  <p className="font-bold text-[#1A1A1A] text-sm">{site.name}</p>
+                  <p className="text-xs text-[#1A1A1A]/40 mt-0.5 truncate">
+                    {site.url.replace(/https?:\/\/(www\.)?/, "")}
+                  </p>
+                </div>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
-
-      {/* Modal */}
-      {openItem && <VideoModal item={openItem} onClose={() => setOpenItem(null)} />}
     </section>
   );
 }

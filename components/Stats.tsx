@@ -10,8 +10,8 @@ const stats = [
     accent: "text-[#3FBDBC]",
   },
   {
-    value: "2",
-    label: "Años de experiencia",
+    value: "+150k",
+    label: "Seguidores generados",
     accent: "text-[#3696A2]",
   },
 ];
@@ -27,7 +27,7 @@ export default function Stats() {
       <div className="dot-grid absolute inset-0 opacity-50" />
 
       <div className="relative z-10 max-w-5xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="reveal text-center mb-16">
           <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest uppercase text-[#822B5B] mb-4">
             <span className="w-4 h-px bg-[#822B5B]" />
             En números
@@ -40,10 +40,10 @@ export default function Stats() {
         </div>
 
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 max-w-3xl mx-auto">
-          {stats.map((stat) => (
+          {stats.map((stat, i) => (
             <div
               key={stat.label}
-              className="group relative rounded-2xl p-8 border border-[#1A1A1A]/8 bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-center"
+              className={`reveal reveal-d${i + 1} group relative rounded-2xl p-8 border border-[#1A1A1A]/8 bg-white shadow-sm hover:shadow-lg hover:-translate-y-1 transition-all duration-300 text-center`}
             >
               <p className={`text-5xl font-black mb-2 ${stat.accent}`}>
                 {stat.value}

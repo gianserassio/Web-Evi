@@ -1,23 +1,42 @@
 const pillars = [
   {
-    label: "Contenido",
-    desc: "UGC auténtico y creativo que conecta con tu audiencia.",
+    label: "Todo integrado",
+    desc: "Un solo interlocutor para contenido, redes y web. Ahorrás tiempo, dinero y la coordinación de varios freelancers.",
+    icon: (
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="3" />
+        <path d="M12 2v4M12 18v4M2 12h4M18 12h4M5 5l2.5 2.5M16.5 16.5 19 19M19 5l-2.5 2.5M7.5 16.5 5 19" />
+      </svg>
+    ),
     color: "#822B5B",
     bg: "bg-[#822B5B]/10",
     border: "border-[#822B5B]/25",
     glow: "hover:shadow-[0_0_50px_#822B5B20]",
   },
   {
-    label: "Estrategia",
-    desc: "Planes de acción medibles orientados a resultados reales.",
+    label: "Coherencia total",
+    desc: "Tu marca comunica igual en todos lados: misma identidad, mismo mensaje, de las redes a tu sitio web.",
+    icon: (
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <path d="m9 12 2 2 4-4" />
+        <circle cx="12" cy="12" r="9" />
+      </svg>
+    ),
     color: "#3FBDBC",
     bg: "bg-[#3FBDBC]/10",
     border: "border-[#3FBDBC]/25",
     glow: "hover:shadow-[0_0_50px_#3FBDBC20]",
   },
   {
-    label: "Desarrollo web",
-    desc: "Sitios y landing pages que convierten visitas en clientes.",
+    label: "Visión estratégica",
+    desc: "Cada pieza tiene un objetivo. No es contenido por contenido: todo apunta a que tu marca crezca.",
+    icon: (
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <circle cx="12" cy="12" r="9" />
+        <circle cx="12" cy="12" r="5" />
+        <circle cx="12" cy="12" r="1.4" fill="currentColor" stroke="none" />
+      </svg>
+    ),
     color: "#3696A2",
     bg: "bg-[#3696A2]/10",
     border: "border-[#3696A2]/25",
@@ -50,7 +69,7 @@ export default function Differentiator() {
         </span>
       </div>
 
-      <div className="relative z-10 max-w-4xl mx-auto text-center">
+      <div className="reveal relative z-10 max-w-4xl mx-auto text-center">
         <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest uppercase text-[#822B5B] mb-6">
           <span className="w-4 h-px bg-[#822B5B]" />
           Por qué elegirme
@@ -72,13 +91,13 @@ export default function Differentiator() {
           {pillars.map((item) => (
             <div
               key={item.label}
-              className={`group rounded-2xl border ${item.border} ${item.bg} p-8 backdrop-blur-sm transition-all duration-300 ${item.glow} hover:-translate-y-1`}
+              className={`group rounded-2xl border ${item.border} ${item.bg} p-8 text-left backdrop-blur-sm transition-all duration-300 ${item.glow} hover:-translate-y-1`}
             >
               <div
-                className="text-3xl font-black mb-4 transition-transform duration-300 group-hover:scale-110 block"
-                style={{ color: item.color }}
+                className="w-13 h-13 mb-5 flex items-center justify-center rounded-2xl transition-transform duration-300 group-hover:scale-110"
+                style={{ backgroundColor: item.color + "26", color: item.color, width: "3.25rem", height: "3.25rem" }}
               >
-                ✦
+                {item.icon}
               </div>
               <h3 className="text-xl font-black text-white mb-3">{item.label}</h3>
               <p className="text-white/45 text-sm leading-relaxed">{item.desc}</p>

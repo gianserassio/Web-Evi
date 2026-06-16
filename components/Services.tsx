@@ -1,56 +1,49 @@
 const services = [
   {
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <path d="M15 10l4.553-2.276A1 1 0 0121 8.723v6.554a1 1 0 01-1.447.894L15 14"/>
-        <rect x="2" y="7" width="13" height="10" rx="2"/>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8z" />
+        <path d="M8.5 11.5h.01M12 11.5h.01M15.5 11.5h.01" />
       </svg>
     ),
-    title: "Contenido & UGC",
-    items: ["Creación de contenido", "Videos para redes / ads"],
-    glow: "group-hover:shadow-[0_0_40px_#822B5B30]",
-    accent: "bg-[#822B5B]/20 text-[#822B5B]",
-    border: "group-hover:border-[#822B5B]/40",
+    number: "01",
+    title: "Community Manager",
+    desc: "Gestiono y hago crecer tu presencia en redes con una estrategia pensada para tu marca.",
+    items: [
+      "Estrategia en redes sociales",
+      "Carruseles",
+      "Reels",
+      "Estadísticas",
+    ],
+    color: "#822B5B",
   },
   {
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="5" y="2" width="14" height="20" rx="2"/>
-        <line x1="12" y1="18" x2="12.01" y2="18"/>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="5" width="20" height="14" rx="3" />
+        <path d="m10 9.5 4.5 2.5L10 14.5z" fill="currentColor" stroke="none" />
       </svg>
     ),
-    title: "Gestión de redes",
-    items: ["Planificación", "Publicación"],
-    glow: "group-hover:shadow-[0_0_40px_#3FBDBC30]",
-    accent: "bg-[#3FBDBC]/20 text-[#3FBDBC]",
-    border: "group-hover:border-[#3FBDBC]/40",
+    number: "02",
+    title: "Creadora de contenido",
+    desc: "Creo videos auténticos, pensados para tu marca y tu audiencia, que generan confianza y mueven a la acción.",
+    items: ["UGC", "Contenido para marcas"],
+    note: "UGC = contenido generado por usuarios: videos auténticos, tipo recomendación real, que generan más confianza que un anuncio tradicional.",
+    color: "#3FBDBC",
   },
   {
     icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/>
-        <polyline points="16 7 22 7 22 13"/>
+      <svg width="26" height="26" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" strokeLinejoin="round">
+        <rect x="2" y="4" width="20" height="16" rx="2.5" />
+        <path d="M2 8.5h20" />
+        <path d="m9 12.5 2 2-2 2M15 12.5l-2 2 2 2" />
       </svg>
     ),
-    title: "Estrategia digital",
-    items: ["Análisis", "Crecimiento"],
-    glow: "group-hover:shadow-[0_0_40px_#3696A230]",
-    accent: "bg-[#3696A2]/20 text-[#3696A2]",
-    border: "group-hover:border-[#3696A2]/40",
-  },
-  {
-    icon: (
-      <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round">
-        <rect x="2" y="4" width="20" height="14" rx="2"/>
-        <line x1="8" y1="22" x2="16" y2="22"/>
-        <line x1="12" y1="18" x2="12" y2="22"/>
-      </svg>
-    ),
-    title: "Desarrollo web",
-    items: ["Landing pages", "Webs funcionales"],
-    glow: "group-hover:shadow-[0_0_40px_#822B5B30]",
-    accent: "bg-[#822B5B]/20 text-[#822B5B]",
-    border: "group-hover:border-[#822B5B]/40",
+    number: "03",
+    title: "Diseño y desarrollo web",
+    desc: "Diseño y desarrollo sitios y landing pages rápidos y a medida, pensados para convertir visitas en clientes reales.",
+    items: ["Landing pages", "Webs funcionales", "Diseño a medida"],
+    color: "#3696A2",
   },
 ];
 
@@ -69,7 +62,7 @@ export default function Services() {
       </div>
 
       <div className="relative z-10 max-w-5xl mx-auto">
-        <div className="text-center mb-16">
+        <div className="reveal text-center mb-16">
           <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest uppercase text-[#822B5B] mb-4">
             <span className="w-4 h-px bg-[#822B5B]" />
             Servicios
@@ -81,29 +74,68 @@ export default function Services() {
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
-          {services.map((service) => (
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5">
+          {services.map((service, i) => (
             <div
               key={service.title}
-              className={`group relative rounded-2xl p-7 border border-white/14 bg-white/5 backdrop-blur-sm transition-all duration-300 hover:-translate-y-1 ${service.glow} ${service.border}`}
+              className={`reveal reveal-d${i + 1} group relative flex flex-col rounded-2xl p-8 border border-white/10 bg-white/[0.03] backdrop-blur-sm transition-all duration-300 hover:-translate-y-1.5 hover:bg-white/[0.06] overflow-hidden`}
             >
-              <div className={`w-11 h-11 rounded-xl ${service.accent} flex items-center justify-center mb-5`}>
+              {/* Glow on hover */}
+              <div
+                className="pointer-events-none absolute -right-10 -top-10 w-32 h-32 rounded-full blur-2xl opacity-0 group-hover:opacity-30 transition-opacity duration-300"
+                style={{ background: service.color }}
+              />
+              {/* Top border accent on hover */}
+              <div
+                className="pointer-events-none absolute inset-x-0 top-0 h-px scale-x-0 group-hover:scale-x-100 origin-left transition-transform duration-300"
+                style={{ background: `linear-gradient(to right, ${service.color}, transparent)` }}
+              />
+
+              {/* Number */}
+              <span className="absolute top-7 right-7 text-sm font-black text-white/15 group-hover:text-white/25 transition-colors">
+                {service.number}
+              </span>
+
+              {/* Icon */}
+              <div
+                className="relative w-14 h-14 rounded-2xl flex items-center justify-center mb-5 transition-transform duration-300 group-hover:scale-110 group-hover:rotate-3"
+                style={{ backgroundColor: service.color + "26", color: service.color }}
+              >
                 {service.icon}
               </div>
-              <h3 className="text-base font-bold text-white mb-3">
+
+              <h3 className="text-lg font-bold text-white mb-2">
                 {service.title}
               </h3>
-              <ul className="space-y-2">
-                {service.items.map((item) => (
-                  <li
-                    key={item}
-                    className="text-xs text-white/45 flex items-start gap-2"
+              <p className="text-sm text-white/45 leading-relaxed mb-6">
+                {service.desc}
+              </p>
+
+              <div className="mt-auto pt-5 border-t border-white/8">
+                <ul className="space-y-2.5">
+                  {service.items.map((item) => (
+                    <li
+                      key={item}
+                      className="text-sm text-white/65 flex items-center gap-2.5"
+                    >
+                      <span
+                        className="inline-block w-1.5 h-1.5 rounded-full flex-shrink-0"
+                        style={{ backgroundColor: service.color }}
+                      />
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+
+                {service.note && (
+                  <p
+                    className="mt-4 text-[11px] leading-relaxed text-white/40 rounded-lg px-3 py-2.5"
+                    style={{ backgroundColor: service.color + "12" }}
                   >
-                    <span className="text-[#822B5B]/60 mt-0.5 text-xs">→</span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
+                    {service.note}
+                  </p>
+                )}
+              </div>
             </div>
           ))}
         </div>

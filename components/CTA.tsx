@@ -2,8 +2,16 @@
 
 import { useState } from "react";
 
+const SERVICES = [
+  "Community Manager",
+  "Creadora de contenido",
+  "Diseño y desarrollo web",
+  "No estoy seguro",
+];
+
 export default function CTA() {
   const [status, setStatus] = useState<"idle" | "sending" | "ok" | "error">("idle");
+  const [servicio, setServicio] = useState<string>("");
 
   async function handleSubmit(e: React.FormEvent<HTMLFormElement>) {
     e.preventDefault();
@@ -18,6 +26,7 @@ export default function CTA() {
       if (res.ok) {
         setStatus("ok");
         form.reset();
+        setServicio("");
       } else {
         setStatus("error");
       }
@@ -53,7 +62,7 @@ export default function CTA() {
         </span>
       </div>
 
-      <div className="relative z-10 max-w-2xl mx-auto text-center">
+      <div className="reveal relative z-10 max-w-2xl mx-auto text-center">
         <span className="inline-flex items-center gap-2 text-sm font-semibold tracking-widest uppercase text-[#822B5B] mb-6">
           <span className="w-4 h-px bg-[#822B5B]" />
           Contacto
@@ -107,6 +116,34 @@ export default function CTA() {
           </div>
         ) : (
           <form onSubmit={handleSubmit} className="flex flex-col gap-4 text-left">
+            {/* Selector de servicio (opcional) */}
+            <input type="hidden" name="servicio" value={servicio} />
+            <div>
+              <p className="text-white/50 text-xs font-semibold uppercase tracking-wider mb-3">
+                ¿Sobre qué querés consultar?{" "}
+                <span className="text-white/30 normal-case font-normal">(opcional)</span>
+              </p>
+              <div className="flex flex-wrap gap-2">
+                {SERVICES.map((s) => {
+                  const selected = servicio === s;
+                  return (
+                    <button
+                      key={s}
+                      type="button"
+                      onClick={() => setServicio(selected ? "" : s)}
+                      className={`px-4 py-2 rounded-full text-sm font-semibold border transition-all duration-200 ${
+                        selected
+                          ? "bg-[#822B5B] border-[#822B5B] text-white"
+                          : "bg-white/5 border-white/15 text-white/60 hover:border-[#822B5B]/60 hover:text-white"
+                      }`}
+                    >
+                      {s}
+                    </button>
+                  );
+                })}
+              </div>
+            </div>
+
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
               <input
                 name="nombre"

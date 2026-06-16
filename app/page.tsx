@@ -14,10 +14,10 @@ export default function Home() {
       <Hero />
       <Marquee />
       <Services />
+      <Portfolio />
+      <Process />
       <About />
       <Marquee dark />
-      <Process />
-      <Portfolio />
       <Differentiator />
       <Stats />
       <CTA />
